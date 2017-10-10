@@ -1,2 +1,2 @@
 # ipalm
-lightweight code implementing inertial proximal alternating linearized minimization (iPALM)
+lightweight matlab and python code implementing inertial proximal alternating linearized minimization (iPALM)
