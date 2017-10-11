@@ -12,8 +12,8 @@ def ipalm(grads, proxs, dims, opts):
     #                    use: grad[i](xs, opts)
     #                         where xs=[x0, ..., xi, ..., xn_1]
     #   proxs         list of functions, that evaluate proximity operator of h_i
-    #                    use: prox[i](v, opts)
-    #                         where v has same dim as xi
+    #                    use: prox[i](v, t, opts) = min_u { t/2*||u-v||_2^2 + h_i(u)
+    #                         where v has same dim as xi, t is scalar
     #   dims          list of ints, size of block xi
     #   opts           dict, optimization algorithm parameters as well as any other problem parameters
     #    opts['nit']   int, max number of iterations to perform before termination
@@ -55,7 +55,7 @@ def ipalm(grads, proxs, dims, opts):
             zi = xs1[i] + inertia * (xs1[i] - xs0[i])
             tau_i = lips[i](xs2, opts)
             xs2[i] = zi
-            xs2[i] = proxs[i](yi - 1.0/tau_i * grads[i](xs2, opts), opts)
+            xs2[i] = proxs[i](yi - 1.0/tau_i * grads[i](xs2, opts), tau_i, opts)
         
         
         # compute relative error in x
