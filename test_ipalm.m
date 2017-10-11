@@ -47,9 +47,9 @@ grad_b=@(xs, opts) reshape(...
 
 grads={grad_a; grad_b};
 
-prox_a=@(v, opts) sign(v).*max(0.0, abs(v)-opts.lam);
+prox_a=@(v, t, opts) sign(v).*max(0.0, abs(v)-opts.lam/t);
 
-prox_b=@(v, opts) v./(1.0+opts.lam);
+prox_b=@(v, t, opts) v./(1.0+opts.lam/t);
 
 proxs={prox_a; prox_b};
 

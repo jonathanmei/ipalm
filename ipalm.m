@@ -10,8 +10,8 @@ function xs2=ipalm(grads, proxs, dims, opts)
     %                    use: grad_i(xs, opts)
     %                         where xs is cell of variable blocks, {x1; ...; xi; ...; xn}
     %   proxs          cell of function handles, which evaluate proximity operator of h_i
-    %                    use: prox_i(v, opts)
-    %                         where v has same dim as xi
+    %                    use: prox_i(v, t, opts) = min_u { t/2*||u-v||_2^2 + h_i(u) }
+    %                         where v has same dim as xi, t is scalar
     %   dims           vector of ints, sizes of vector xi
     %   opts           struct, optimization algorithm parameters as well as any other problem parameters
     %    opts.nit       int, max number of iterations to perform before termination
@@ -62,7 +62,7 @@ function xs2=ipalm(grads, proxs, dims, opts)
             grad_i = grads{i};
             
             xs2{i} = zi;
-            xs2{i} = prox_i(yi - 1.0/tau_i * grad_i(xs2, opts), opts);
+            xs2{i} = prox_i(yi - 1.0/tau_i * grad_i(xs2, opts), tau_i, opts);
         end
         
         % compute relative error in x
