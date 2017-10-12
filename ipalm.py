@@ -38,8 +38,8 @@ def ipalm(grads, proxs, dims, opts):
     
     nblocks=len(grads)
     # initialize states for inertia
-    xs1=xs0
-    xs2=xs0
+    xs1=list(xs0)
+    xs2=list(xs0)
     
     it=0 #iteration counter
     err=np.float('inf') #relative change in x. start at inf to run at least once
@@ -63,8 +63,7 @@ def ipalm(grads, proxs, dims, opts):
         err = np.linalg.norm(x1-np.hstack(xs2))/(1e-10+np.linalg.norm(x1))
         
         #update states for inertia
-        xs0 = xs1
-        xs1 = xs2
-
+        xs0 = list(xs1)
+        xs1 = list(xs2)
         it+=1 #increment iteration counter
     return xs2
